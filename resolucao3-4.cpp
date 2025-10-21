@@ -45,11 +45,11 @@ int main()
             else
                 reais_ordered++;
 
-           /* std::cout << "Equacao " << i << ": ";
+            std::cout << "Equacao " << i << ": ";
             if (res.first == 0.0 && res.second == 0.0)
                 std::cout << "sem raizes reais\n";
             else
-                std::cout << "x1 = " << res.first << ", x2 = " << res.second << "\n";*/
+                std::cout << "x1 = " << res.first << ", x2 = " << res.second << "\n";
         }
     }
 
@@ -66,14 +66,14 @@ int main()
 
 #pragma omp parallel
     {
-        // ===== Fase 1: calcular as raízes =====
+        // Fase 1: calcular as raízes
 #pragma omp for
         for (int i = 0; i < N; ++i)
         {
             resultados[i] = resolver_bhaskara(a[i], b[i], c[i]);
         }
 
-        // ===== Fase 2: esperar todas terminarem (barrier) e depois analisar =====
+    // Fase 2: esperar todas terminarem (barrier) e depois analisar
 #pragma omp barrier
 #pragma omp for reduction(+:reais_barrier, irreais_barrier)
         for (int i = 0; i < N; ++i)
